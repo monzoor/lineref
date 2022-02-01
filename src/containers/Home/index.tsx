@@ -1,10 +1,21 @@
+import { openDialog } from '@actions/core/modalActions';
 import { Page } from '@components';
 import { LS_KEYS } from '@constants';
+import { DIALOGS } from '@constants/dialogs';
+import { GlobalContext } from '@context/Provider';
 import { getLSValue } from '@utils/storage';
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 
 const Home: FC = () => {
   const [carList, setCarList] = useState([]);
+
+  const fff = useContext<any>(GlobalContext);
+  const { modalDispatch } = fff;
+  console.log('===s==s', fff.modalState);
+
+  const triggerModal = () => {
+    modalDispatch(openDialog(DIALOGS.LOGIN));
+  };
 
   useEffect(() => {
     const data = getLSValue(LS_KEYS.USER_DATA);
@@ -14,6 +25,7 @@ const Home: FC = () => {
 
   return (
     <Page>
+      <button onClick={triggerModal}>Open Modal</button>
       <div className="container mx-auto mt-5">
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

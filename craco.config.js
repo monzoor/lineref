@@ -22,6 +22,7 @@ module.exports = {
           '@hooks': resolve('src/hooks'),
           '@dictionaries': resolve('src/dictionaries'),
           '@pages': resolve('src/pages'),
+          '@context': resolve('src/context'),
         },
       },
     },

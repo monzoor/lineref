@@ -9,3 +9,5 @@ export { Button } from './Buttons';
 export { BUTTON_VARIANT } from './Buttons';
 
 export { default as Spinner } from './Spinner';
+
+export { default as Dialog } from './Dialog';
