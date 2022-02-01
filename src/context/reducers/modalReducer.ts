@@ -53,7 +53,7 @@ const modalReducer = (state: any, action: any) => {
   switch (action.type) {
     case DIALOG.OPEN:
       return {
-        ...onDialogOpen(state, action.name, action.data),
+        modal: { ...onDialogOpen(state, action.name, action.data) },
         modalOpened: true,
       };
 
@@ -64,14 +64,14 @@ const modalReducer = (state: any, action: any) => {
       };
 
       return {
-        ...newState,
+        modal: { ...newState },
         modalOpened: isModalOpened(newState),
       };
 
     case DIALOG.CLOSE_ALL:
       return {
         ...state,
-        ...setInitialValues(),
+        modal: { ...setInitialValues() },
       };
 
     default:

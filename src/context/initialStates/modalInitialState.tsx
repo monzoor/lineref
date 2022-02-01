@@ -20,6 +20,6 @@ export const setInitialValues = () => {
   return state;
 };
 
-const initialState = setInitialValues();
+const modalInitialState = setInitialValues();
 
-export default initialState;
+export default modalInitialState;

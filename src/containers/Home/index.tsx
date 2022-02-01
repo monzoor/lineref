@@ -1,19 +1,21 @@
+import { FC, useEffect, useState } from 'react';
+
 import { openDialog } from '@actions/core/modalActions';
 import { Page } from '@components';
 import { LS_KEYS } from '@constants';
 import { DIALOGS } from '@constants/dialogs';
-import { GlobalContext } from '@context/Provider';
+import { useAppState } from '@context/Provider';
 import { getLSValue } from '@utils/storage';
-import { FC, useContext, useEffect, useState } from 'react';
+
 import Lists from './List';
 
 const Home: FC = () => {
   const [carList, setCarList] = useState([]);
 
-  const { modalDispatch } = useContext<any>(GlobalContext);
+  const [, dispatch] = useAppState();
 
   const triggerModal = () => {
-    modalDispatch(openDialog(DIALOGS.BOOK));
+    dispatch(openDialog(DIALOGS.BOOK));
   };
 
   useEffect(() => {

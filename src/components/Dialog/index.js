@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import { DIALOGS as DIALOGS_NAMES } from '@constants/dialogs';
-import { GlobalContext } from '@context/Provider';
+import { useAppState } from '@context/Provider';
 
 import Book from '@components/Dialog/Book';
 
@@ -10,7 +9,10 @@ const DIALOG_COMPONENTS = {
 
 const Dialogs = () => {
   // const { modalState, modalDispatch } = useContext(GlobalContext);
-  const { modalState } = useContext(GlobalContext);
+
+  const [state] = useAppState();
+
+  const modalState = state.modal;
   const isAnyOpened = modalState.modalOpened;
   const dialog = modalState;
 

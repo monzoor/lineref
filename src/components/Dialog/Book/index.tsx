@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FC, useContext } from 'react';
 
 import { closeDialog } from '@actions/core/modalActions';
-import { GlobalContext } from '@context/Provider';
+import { GlobalContext, useAppState } from '@context/Provider';
 // import { Button, Fields, Form, BUTTON_COLOR } from '@components';
 
 import ModalLayout from '../ModalLayout';
@@ -20,10 +20,10 @@ const AuthDialog: FC<IProps> = (props) => {
     formState: { isDirty, isValid },
   } = methods;
 
-  const { modalDispatch } = useContext<any>(GlobalContext);
+  const [state, dispatch] = useAppState();
 
   const onCloseModal = () => {
-    modalDispatch(closeDialog(name));
+    dispatch(closeDialog(name));
   };
 
   const onSubmit = (data: any) => {

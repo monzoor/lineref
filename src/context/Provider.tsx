@@ -1,25 +1,24 @@
-import { FC, createContext, useReducer } from 'react';
-
-import modalInitialState from './initialStates/modalInitialState';
-
-import modalReducer from './reducers/modalReducer';
+import { FC, createContext, useReducer, useContext } from 'react';
 
 export const GlobalContext = createContext({});
 
-export const GlobalProvider: FC = ({ children }) => {
-  const [modalState, modalDispatch] = useReducer(
-    modalReducer,
-    modalInitialState,
-  );
+interface IProviderProps {
+  reducer: any;
+  initialState: any;
+}
+
+export const GlobalProvider: FC<IProviderProps> = ({
+  reducer,
+  initialState = {},
+  children,
+}) => {
+  const value = useReducer(reducer, initialState);
 
   return (
-    <GlobalContext.Provider
-      value={{
-        modalState,
-        modalDispatch,
-      }}
-    >
-      {children}
-    </GlobalContext.Provider>
+    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
+};
+
+export const useAppState = (): any => {
+  return useContext(GlobalContext);
 };
