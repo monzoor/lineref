@@ -1,7 +1,9 @@
+import initialDataState from '@context/initialStates/mainDataInitialState';
 import modalInitialState from '@context/initialStates/modalInitialState';
 
 const initialState = {
   modal: modalInitialState,
+  items: initialDataState,
 };
 
 const combineReducers = (reducers: any) => {
