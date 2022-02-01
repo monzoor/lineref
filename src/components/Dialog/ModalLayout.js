@@ -21,7 +21,10 @@ const ModalLayout = ({
       onClose={onCloseModal}
       className="fixed z-50 top-0 inset-0"
     >
-      <Dialog.Overlay className="fixed inset-0 bg-black opacity-70" />
+      <Dialog.Overlay
+        onClick={onCloseModal}
+        className="fixed inset-0 bg-black opacity-70"
+      />
 
       {showCloseButton && (
         <div

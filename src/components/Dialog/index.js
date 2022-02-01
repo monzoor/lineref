@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { DIALOGS as DIALOGS_NAMES } from '@constants/dialogs';
 import { GlobalContext } from '@context/Provider';
 
-import Login from '@components/Dialog/Auth/Login';
+import Book from '@components/Dialog/Book';
 
 const DIALOG_COMPONENTS = {
-  [DIALOGS_NAMES.LOGIN]: Login,
+  [DIALOGS_NAMES.BOOK]: Book,
 };
 
 const Dialogs = () => {

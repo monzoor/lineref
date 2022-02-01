@@ -4,6 +4,7 @@ export { default as Input } from './Forms';
 export { default as Form } from './Forms/Form';
 export { default as CheckBox } from './Forms/Checkbox';
 export { default as DatePickers } from './Forms/Datepicker';
+export { default as Select } from './Forms/Select';
 
 export { Button } from './Buttons';
 export { BUTTON_VARIANT } from './Buttons';
