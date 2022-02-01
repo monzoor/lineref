@@ -12,6 +12,8 @@ import { Select } from '@components';
 interface IProps {
   name: string;
   isOpen: boolean;
+  data?: any;
+  isHided?: boolean;
 }
 const AuthDialog: FC<IProps> = (props) => {
   const { isOpen, name } = props;

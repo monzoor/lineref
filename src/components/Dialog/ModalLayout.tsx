@@ -1,18 +1,24 @@
-import { useContext } from 'react';
+import { FC } from 'react';
 import { Dialog } from '@headlessui/react';
 import { closeDialog } from '@actions/core/modalActions';
-import { GlobalContext } from '@context/Provider';
+import { useAppState } from '@context/Provider';
 
-const ModalLayout = ({
+interface IProps {
+  open: boolean;
+  dialogName: string;
+  showCloseButton?: boolean;
+}
+
+const ModalLayout: FC<IProps> = ({
   children,
   open,
   dialogName,
   showCloseButton = false,
 }) => {
-  const { modalDispatch } = useContext(GlobalContext);
+  const [, dispatch] = useAppState();
 
   const onCloseModal = () => {
-    modalDispatch(closeDialog(dialogName));
+    dispatch(closeDialog(dialogName));
   };
 
   return (
