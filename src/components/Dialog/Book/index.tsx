@@ -24,6 +24,9 @@ const AuthDialog: FC<IProps> = (props) => {
   } = methods;
 
   const [state, dispatch] = useAppState();
+  const {
+    products: { availableItems },
+  } = state;
 
   const onCloseModal = () => {
     dispatch(closeDialog(name));
@@ -32,6 +35,8 @@ const AuthDialog: FC<IProps> = (props) => {
   const onSubmit = (data: any) => {
     console.log('----', data);
   };
+
+  console.log('=====', state);
 
   return (
     <ModalLayout open={isOpen} dialogName={name}>
@@ -62,24 +67,15 @@ const AuthDialog: FC<IProps> = (props) => {
                       <Select
                         {...props}
                         label="Select an item to book"
-                        name={FIELDS.BOOKING.ITEM}
-                        id={FIELDS.BOOKING.ITEM}
+                        name={FIELDS.BOOKING.BOOKING}
+                        id={FIELDS.BOOKING.BOOKING}
                         defaultValue="0"
-                        options={[
-                          {
-                            label: 'Item 1',
-                            value: 'item1',
-                          },
-                          {
-                            label: 'Item 2',
-                            value: 'item2',
-                          },
-                        ]}
+                        options={availableItems}
                       />
                     </div>
                     <div className="mt-5">
                       <button
-                        type="button"
+                        type="submit"
                         className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
                       >
                         Delete account

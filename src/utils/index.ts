@@ -3,7 +3,7 @@ export const getAssetUrl = (name: string) =>
 
 export const prepareSelectValues = (items: string[]) =>
   items.map((item: any) => ({
-    name: item.name,
+    name: `${item.name} - ${item.code}`,
     value: item.code,
   }));
 

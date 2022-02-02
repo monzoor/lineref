@@ -1,6 +1,6 @@
 export const FIELDS = {
   BOOKING: {
-    ITEM: 'item',
+    BOOKING: 'book',
     START_DATE: 'startDate',
     END_DATE: 'endDate',
   },

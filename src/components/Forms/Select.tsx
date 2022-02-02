@@ -29,7 +29,7 @@ const Select: FC<ISelect> = ({ label, name, id, defaultValue, options }) => {
           <option>Please select an item</option>
           {options.map((option: any, index: number) => (
             <option key={index} value={option.value}>
-              {option.label}
+              {option.name}
             </option>
           ))}
         </select>

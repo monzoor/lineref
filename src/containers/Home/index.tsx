@@ -12,6 +12,7 @@ import { fetchData, getSuccessFetchData } from '@actions/data';
 import { isLoading } from '@utils/store';
 import { PAGES } from '@constants/pages';
 import { processNewData } from '@utils';
+import ModalItems from './ModalItems';
 
 const Home: FC = () => {
   const [state, dispatch] = useAppState();
@@ -20,10 +21,6 @@ const Home: FC = () => {
     // products,
     products: { items },
   } = state;
-
-  const triggerModal = () => {
-    dispatch(openDialog(DIALOGS.BOOK));
-  };
 
   useEffect(() => {
     const getData = getLSValue(LS_KEYS.USER_DATA);
@@ -57,7 +54,7 @@ const Home: FC = () => {
     <Page>
       <div className="container mx-auto mt-5">
         <div className="flex flex-col">
-          <button onClick={triggerModal}>Open Modal</button>
+          <ModalItems />
 
           <Lists itemList={items.data} />
         </div>
