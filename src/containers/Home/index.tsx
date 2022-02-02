@@ -18,7 +18,7 @@ const Home: FC = () => {
 
   const {
     // products,
-    products: { rawData },
+    products: { items },
   } = state;
 
   const triggerModal = () => {
@@ -33,6 +33,7 @@ const Home: FC = () => {
         try {
           const data = await fetchData(dispatch);
           const newDataSet = processNewData(data[0 as keyof typeof data]);
+          console.log('----', newDataSet);
           setLSValue(LS_KEYS.USER_DATA, newDataSet);
           dispatch(getSuccessFetchData(newDataSet));
         } catch (error) {
@@ -47,7 +48,7 @@ const Home: FC = () => {
     }
   }, [dispatch]);
 
-  if (isLoading(rawData)) {
+  if (isLoading(items)) {
     return <Spinner />;
   }
 
@@ -58,7 +59,7 @@ const Home: FC = () => {
         <div className="flex flex-col">
           <button onClick={triggerModal}>Open Modal</button>
 
-          <Lists />
+          <Lists itemList={items.data} />
         </div>
       </div>
     </Page>

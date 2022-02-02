@@ -1,10 +1,12 @@
 import { getLoadingState } from '@utils/store';
 
 const initialDataState = {
-  rawData: {
+  items: {
     data: [],
     ...getLoadingState(),
   },
+  availableItems: [],
+  unAvailableItems: [],
 };
 
 export default initialDataState;

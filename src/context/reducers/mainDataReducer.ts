@@ -1,4 +1,5 @@
 import { MAIN_DATA } from '@actions';
+import { prepareSelectValues } from '@utils';
 import { getErrorState, getReadyState } from '@utils/store';
 
 const mainDataReducer = (state: IReducerState, action: IReducerAction) => {
@@ -7,9 +8,15 @@ const mainDataReducer = (state: IReducerState, action: IReducerAction) => {
       return {
         ...state,
         products: {
-          rawData: {
+          items: {
             ...getReadyState(action.data),
           },
+          availableItems: prepareSelectValues(
+            action.data.filter((item: any) => item.availability),
+          ),
+          unAvailableItems: prepareSelectValues(
+            action.data.filter((item: any) => !item.availability),
+          ),
         },
       };
 

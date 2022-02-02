@@ -1,24 +1,12 @@
-import { FC, useEffect, useState } from 'react';
-import { useAppState } from '@context/Provider';
+import { FC } from 'react';
 import TableHeader from './TableHeader';
 
-const Lists: FC = () => {
-  const [itemList, setItemList] = useState([]);
-  const [state] = useAppState();
-  const {
-    // products,
-    products: { rawData },
-  } = state;
-
-  useEffect(() => {
-    if (rawData.data.length) {
-      setItemList(rawData.data);
-    } else {
-      setItemList([]);
-    }
-  }, [rawData.data]);
-
-  // console.log('==sas===', products);
+// TODO: fixed
+interface Props {
+  [key: string]: any;
+}
+const Lists: FC<Props> = ({ itemList }) => {
+  console.log('==sas===');
 
   return (
     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
