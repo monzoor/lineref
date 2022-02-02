@@ -28,6 +28,6 @@ export const fetchData = async (dispatch: (data: any) => void) => {
   ).catch(() => {
     dispatch(getErrorFetchData());
   });
-  dispatch(getSuccessFetchData(data[0 as keyof typeof data]));
+  // dispatch(getSuccessFetchData(data[0 as keyof typeof data]));
   return data;
 };

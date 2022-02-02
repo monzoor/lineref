@@ -2,16 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import { useAppState } from '@context/Provider';
 import TableHeader from './TableHeader';
 
-interface IItem {
-  name: string;
-  code: string;
-  availability: boolean;
-  needing_repair: boolean;
-  durability: number;
-  max_durability: number;
-  mileage: number;
-}
-
 const Lists: FC = () => {
   const [itemList, setItemList] = useState([]);
   const [state] = useAppState();
@@ -44,7 +34,7 @@ const Lists: FC = () => {
                   </td>
                 </tr>
               ) : (
-                itemList.map((item: IItem, index: number) => {
+                itemList.map((item: IProduct, index: number) => {
                   const {
                     name,
                     code,
@@ -53,6 +43,7 @@ const Lists: FC = () => {
                     durability,
                     max_durability,
                     mileage,
+                    hasDiscount,
                   } = item;
                   return (
                     <tr
@@ -79,6 +70,9 @@ const Lists: FC = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {mileage ? mileage : 0}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {hasDiscount ? '5%' : 0}
                       </td>
                     </tr>
                   );

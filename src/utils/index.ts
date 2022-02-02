@@ -6,3 +6,9 @@ export const prepareSelectValues = (items: string[]) =>
     name: item.name,
     value: item.name.toLowerCase().split(' ').join('_'),
   }));
+
+export const processNewData = (data: string[]) =>
+  data.map((item: any) => ({
+    ...item,
+    hasDiscount: Math.random() < 0.5,
+  }));

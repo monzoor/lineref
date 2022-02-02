@@ -11,9 +11,15 @@ import Lists from './List';
 import { fetchData, getSuccessFetchData } from '@actions/data';
 import { isLoading } from '@utils/store';
 import { PAGES } from '@constants/pages';
+import { processNewData } from '@utils';
 
 const Home: FC = () => {
   const [state, dispatch] = useAppState();
+
+  const {
+    // products,
+    products: { rawData },
+  } = state;
 
   const triggerModal = () => {
     dispatch(openDialog(DIALOGS.BOOK));
@@ -26,7 +32,9 @@ const Home: FC = () => {
       const fetchItems = async () => {
         try {
           const data = await fetchData(dispatch);
-          setLSValue(LS_KEYS.USER_DATA, data[0 as keyof typeof data]);
+          const newDataSet = processNewData(data[0 as keyof typeof data]);
+          setLSValue(LS_KEYS.USER_DATA, newDataSet);
+          dispatch(getSuccessFetchData(newDataSet));
         } catch (error) {
           removeLSValue(LS_KEYS.USER_DATA);
 
@@ -39,7 +47,7 @@ const Home: FC = () => {
     }
   }, [dispatch]);
 
-  if (isLoading(state.products.rawData)) {
+  if (isLoading(rawData)) {
     return <Spinner />;
   }
 
