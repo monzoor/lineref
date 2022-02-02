@@ -1,5 +1,8 @@
+import { getLoadingState } from '@utils/store';
+
 const initialDataState = {
-  product: [],
+  data: [],
+  ...getLoadingState(),
 };
 
 export default initialDataState;

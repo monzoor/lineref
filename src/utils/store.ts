@@ -5,21 +5,21 @@ interface IStore {
   data?: any;
 }
 
-export const getLoadingState = (state = {}) => ({
+export const getLoadingState = (state = {}): IStore => ({
   ...state,
   isLoading: true,
   isLoaded: false,
   isError: false,
 });
 
-export const getReadyState = (data = {}) => ({
+export const getReadyState = (data = {}): IStore => ({
   data,
   isLoading: false,
   isLoaded: true,
   isError: false,
 });
 
-export const getErrorState = (data = {}) => ({
+export const getErrorState = (data = {}): IStore => ({
   data,
   isLoading: false,
   isLoaded: false,

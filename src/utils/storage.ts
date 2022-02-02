@@ -1,6 +1,6 @@
 export const BASE_PREFIX = 'lrl_';
 
-export const setLSValue = (key: string, value: string) => {
+export const setLSValue = (key: string, value: any) => {
   const val = JSON.stringify(value);
   localStorage.setItem(`${BASE_PREFIX}${key}`, val);
 };

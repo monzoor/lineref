@@ -5,13 +5,27 @@ import initialDialogState, {
   setInitialValues,
 } from '@context/initialStates/modalInitialState';
 
-const isModalOpened = (state: any) =>
-  Object.values(DIALOGS_NAMES).some((dialogName) => state[dialogName].isOpen);
+interface IModalOpened {
+  [key: string]: any;
+}
 
-const onDialogOpen = (state: any, dialogName: string, data: any) => {
+const isModalOpened = (state: IModalOpened) =>
+  Object.values(DIALOGS_NAMES).some(
+    (dialogName: string) => state[dialogName].isOpen,
+  );
+
+interface IStateOnDialogOpen {
+  [key: string]: any;
+}
+
+const onDialogOpen = (
+  state: IStateOnDialogOpen,
+  dialogName: string,
+  data: any,
+) => {
   let newState: any = {};
 
-  Object.values(DIALOGS_NAMES).forEach((name) => {
+  Object.values(DIALOGS_NAMES).forEach((name: string) => {
     if (name === dialogName) {
       newState[name] = {
         ...state[name],
@@ -30,10 +44,13 @@ const onDialogOpen = (state: any, dialogName: string, data: any) => {
   return newState;
 };
 
-const onDialogClose = (state: any, dialogName: string) => {
+interface IStateOnDialogClose {
+  [key: string]: any;
+}
+const onDialogClose = (state: IStateOnDialogClose, dialogName: string) => {
   let newState: any = {};
 
-  Object.values(DIALOGS_NAMES).forEach((name) => {
+  Object.values(DIALOGS_NAMES).forEach((name: string) => {
     if (name === dialogName) {
       newState[name] = {
         ...initialDialogState,
@@ -49,7 +66,7 @@ const onDialogClose = (state: any, dialogName: string) => {
   return newState;
 };
 
-const modalReducer = (state: any, action: any) => {
+const modalReducer = (state: IReducerState, action: IReducerAction) => {
   switch (action.type) {
     case DIALOG.OPEN:
       return {

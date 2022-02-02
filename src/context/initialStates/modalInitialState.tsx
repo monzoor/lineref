@@ -6,12 +6,16 @@ const initialDialogState = {
   data: {},
 };
 
+interface IState {
+  [key: string]: any;
+}
+
 export const setInitialValues = () => {
-  const state: any = {
+  const state: IState = {
     modalOpened: false,
   };
 
-  Object.values(DIALOGS_NAMES).forEach((name: string) => {
+  Object.values(DIALOGS_NAMES).forEach((name: keyof IState) => {
     state[name] = {
       ...initialDialogState,
     };
