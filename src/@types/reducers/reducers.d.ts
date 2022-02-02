@@ -1,6 +1,6 @@
 interface IReducerState {
   modal: any;
-  items: any;
+  products: any;
 }
 interface IReducerAction {
   type: string;

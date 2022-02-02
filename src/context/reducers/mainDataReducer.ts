@@ -6,19 +6,19 @@ const mainDataReducer = (state: IReducerState, action: IReducerAction) => {
     case MAIN_DATA.SUCCESS:
       return {
         ...state,
-        items: getReadyState(action.data),
+        products: {
+          rawData: {
+            ...getReadyState(action.data),
+          },
+        },
       };
 
     case MAIN_DATA.FAIL:
       return {
-        ...state.items,
-        items: getErrorState(),
+        ...state,
+        products: getErrorState(),
       };
 
-    // case actionTypes.GET_MAIN_DATA_SUCCESS:
-    //   return getReadyState(state, action.data);
-    // case actionTypes.GET_MAIN_DATA_FAIL:
-    //   return getErrorState(state, action.data);
     default:
       return state;
   }

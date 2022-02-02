@@ -9,7 +9,7 @@ import mainDataReducer from '@context/reducers/mainDataReducer';
 
 const appReducers = combineReducers({
   modal: modalReducer,
-  items: mainDataReducer,
+  products: mainDataReducer,
 });
 
 const App: FC = () => {

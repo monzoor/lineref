@@ -3,7 +3,7 @@ import modalInitialState from '@context/initialStates/modalInitialState';
 
 const initialState = {
   modal: modalInitialState,
-  items: initialDataState,
+  products: initialDataState,
 };
 
 const combineReducers = (reducers: any) => {

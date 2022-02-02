@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 
 import { openDialog } from '@actions/core/modalActions';
 import { Page, Spinner } from '@components';
@@ -26,7 +26,6 @@ const Home: FC = () => {
       const fetchItems = async () => {
         try {
           const data = await fetchData(dispatch);
-
           setLSValue(LS_KEYS.USER_DATA, data[0 as keyof typeof data]);
         } catch (error) {
           removeLSValue(LS_KEYS.USER_DATA);
@@ -40,12 +39,11 @@ const Home: FC = () => {
     }
   }, [dispatch]);
 
-  if (isLoading(state.items)) {
+  if (isLoading(state.products.rawData)) {
     return <Spinner />;
   }
 
-  console.log('=====ren');
-
+  console.log('=====red');
   return (
     <Page>
       <div className="container mx-auto mt-5">

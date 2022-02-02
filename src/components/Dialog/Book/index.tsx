@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form';
 
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { closeDialog } from '@actions/core/modalActions';
-import { GlobalContext, useAppState } from '@context/Provider';
+import { useAppState } from '@context/Provider';
 // import { Button, Fields, Form, BUTTON_COLOR } from '@components';
 
 import ModalLayout from '../ModalLayout';
-import { Select } from '@components';
+import { Select, Form } from '@components';
+import { FIELDS } from '@constants/fields';
 
 interface IProps {
   name: string;
@@ -54,33 +55,39 @@ const AuthDialog: FC<IProps> = (props) => {
                   associated with it.
                 </p>
               </div> */}
-              <div className="mt-5">
-                <Select />
-                <label
-                  htmlFor="location"
-                  className="block text-sm font-medium text-gray-700 border-red-500"
-                >
-                  Select you item
-                </label>
-                <select
-                  id="location"
-                  name="location"
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-black focus:outline-none sm:text-sm rounded-md"
-                  defaultValue="Canada"
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
-              <div className="mt-5">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-                >
-                  Delete account
-                </button>
-              </div>
+              <Form methods={methods} onSubmit={onSubmit}>
+                {(props: any) => (
+                  <>
+                    <div className="mt-5">
+                      <Select
+                        {...props}
+                        label="Select an item to book"
+                        name={FIELDS.BOOKING.ITEM}
+                        id={FIELDS.BOOKING.ITEM}
+                        defaultValue="0"
+                        options={[
+                          {
+                            label: 'Item 1',
+                            value: 'item1',
+                          },
+                          {
+                            label: 'Item 2',
+                            value: 'item2',
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+                      >
+                        Delete account
+                      </button>
+                    </div>
+                  </>
+                )}
+              </Form>
             </div>
           </div>
         </div>

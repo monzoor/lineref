@@ -5,6 +5,7 @@ export const DIALOG = {
 };
 
 export const MAIN_DATA = {
+  START: 'MAIN_DATA.START',
   SUCCESS: 'MAIN_DATA.SUCCESS',
   UPDATE: 'MAIN_DATA.UPDATE',
   FAIL: 'MAIN_DATA.FAIL',

@@ -6,6 +6,10 @@ interface Action {
   data?: any;
 }
 
+export const getStartFetchData = (): Action => ({
+  type: MAIN_DATA.START,
+});
+
 export const getSuccessFetchData = (data: any): Action => ({
   type: MAIN_DATA.SUCCESS,
   data,
@@ -24,6 +28,6 @@ export const fetchData = async (dispatch: (data: any) => void) => {
   ).catch(() => {
     dispatch(getErrorFetchData());
   });
-  dispatch(getSuccessFetchData(data));
+  dispatch(getSuccessFetchData(data[0 as keyof typeof data]));
   return data;
 };

@@ -15,17 +15,20 @@ interface IItem {
 const Lists: FC = () => {
   const [itemList, setItemList] = useState([]);
   const [state] = useAppState();
-  const { items } = state;
+  const {
+    // products,
+    products: { rawData },
+  } = state;
 
   useEffect(() => {
-    if (items.data.length) {
-      setItemList(items.data);
+    if (rawData.data.length) {
+      setItemList(rawData.data);
     } else {
       setItemList([]);
     }
-  }, [items]);
+  }, [rawData.data]);
 
-  // console.log('=====', items);
+  // console.log('==sas===', products);
 
   return (
     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
