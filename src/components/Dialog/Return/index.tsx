@@ -50,7 +50,13 @@ const ReturnDialog: FC<IProps> = (props) => {
     };
 
     dispatch(closeDialog(name));
-    dispatch(openDialog(DIALOGS.CONFIRMATION, { ...newData, isBook: false }));
+    dispatch(
+      openDialog(DIALOGS.CONFIRMATION, {
+        ...newData,
+        isBook: false,
+        mileage: data.usedMileage,
+      }),
+    );
   };
 
   useEffect(() => {

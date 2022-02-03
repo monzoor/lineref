@@ -19,7 +19,7 @@ const Confirmation: FC<IProps> = (props) => {
   const {
     isOpen,
     name,
-    data: { calculatedPrice, totalDays, data, isBook },
+    data: { calculatedPrice, totalDays, data, isBook, mileage },
   } = props;
 
   const [, dispatch] = useAppState();
@@ -39,6 +39,14 @@ const Confirmation: FC<IProps> = (props) => {
 
     const durability = dataRef.current[findIndex].durability;
     const type = dataRef.current[findIndex].type;
+
+    if (!isBook) {
+      const currentMileage = dataRef.current[findIndex].mileage
+        ? dataRef.current[findIndex].mileage
+        : 0;
+      dataRef.current[findIndex].mileage = currentMileage + mileage;
+    }
+
     if (type === 'plain' && !isBook) {
       dataRef.current[findIndex].durability = durability - totalDays;
     }

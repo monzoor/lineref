@@ -15,7 +15,9 @@ const mainDataReducer = (state: IReducerState, action: IReducerAction) => {
             action.data.filter((item: any) => item.availability),
           ),
           unAvailableItems: prepareSelectValues(
-            action.data.filter((item: any) => !item.availability),
+            action.data.filter(
+              (item: any) => !item.availability && item.durability !== 0,
+            ),
           ),
         },
       };
