@@ -11,7 +11,6 @@ import { useAppState } from '@context/Provider';
 const Lists: FC = () => {
   const [itemList, setListItems] = useState(getLSValue(LS_KEYS.USER_DATA));
   const [state] = useAppState();
-  // const itemList = getLSValue(LS_KEYS.USER_DATA);
 
   const methods = useForm({ mode: 'onChange' });
   const { watch, setValue } = methods;
@@ -19,7 +18,7 @@ const Lists: FC = () => {
   useEffect(() => {
     setListItems(getLSValue(LS_KEYS.USER_DATA));
     setValue(FIELDS.SEARCH, '');
-  }, [state]);
+  }, [state, setValue]);
 
   useEffect(() => {
     const subscription = watch((value) => {

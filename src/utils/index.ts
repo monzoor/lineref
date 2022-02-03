@@ -64,7 +64,9 @@ export const processDataCalculation = (data: any) => {
   if (type === 'plain' && !isBook) {
     newDataRef[findIndex].durability = durability - totalDays;
   }
-  if (type === 'meeter' && !isBook) {
+  console.log('=====', type);
+
+  if (type === 'meter' && !isBook) {
     newDataRef[findIndex].durability =
       durability -
       2 * totalDays -
