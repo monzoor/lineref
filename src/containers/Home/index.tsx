@@ -1,9 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC, memo, useEffect } from 'react';
 
-import { openDialog } from '@actions/core/modalActions';
 import { Page, Spinner } from '@components';
 import { LS_KEYS } from '@constants';
-import { DIALOGS } from '@constants/dialogs';
 import { useAppState } from '@context/Provider';
 import { getLSValue, removeLSValue, setLSValue } from '@utils/storage';
 
@@ -18,7 +16,6 @@ const Home: FC = () => {
   const [state, dispatch] = useAppState();
 
   const {
-    // products,
     products: { items },
   } = state;
 
@@ -30,7 +27,6 @@ const Home: FC = () => {
         try {
           const data = await fetchData(dispatch);
           const newDataSet = processNewData(data[0 as keyof typeof data]);
-          console.log('----', newDataSet);
           setLSValue(LS_KEYS.USER_DATA, newDataSet);
           dispatch(getSuccessFetchData(newDataSet));
         } catch (error) {
@@ -49,18 +45,17 @@ const Home: FC = () => {
     return <Spinner />;
   }
 
-  console.log('=====red');
   return (
     <Page>
       <div className="container mx-auto mt-5">
         <div className="flex flex-col">
           <ModalItems dispatch={dispatch} />
 
-          <Lists itemList={items.data} />
+          <Lists />
         </div>
       </div>
     </Page>
   );
 };
 
-export default Home;
+export default memo(Home);

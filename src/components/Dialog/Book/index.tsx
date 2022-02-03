@@ -65,8 +65,6 @@ const BookDialog: FC<IProps> = (props) => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  // console.log('=====', state);
-
   return (
     <ModalLayout open={isOpen} dialogName={name}>
       <div className="min-h-screen flex justify-center items-center">

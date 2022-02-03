@@ -15,8 +15,6 @@ const ModalItems: FC<IProps> = ({ dispatch }) => {
     dispatch(openDialog(DIALOGS.RETURN));
   };
 
-  console.log('==ren button');
-
   return (
     <div className="grid grid-cols-2 w-6/12 gap-4 items-end">
       <Button

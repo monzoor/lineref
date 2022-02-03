@@ -47,7 +47,7 @@ export const priceCalculation = ({
   return finalPrice;
 };
 
-export const returnCalculation = (data: any) => {
-  const { hasDiscount, minimum_rent_period, price, startDate, endDate } = data;
-  return 1;
-};
+// export const returnCalculation = (data: any) => {
+//   const { hasDiscount, minimum_rent_period, price, startDate, endDate } = data;
+//   return 1;
+// };

@@ -14,7 +14,7 @@ export const BUTTON_VARIANT = {
     'text-green-700 bg-green-100 hover:bg-green-200 focus:ring-green-500',
 };
 export const Button: FC<ButtonTypes> = (props) => {
-  const { text, type, className, small, variant, to, disabled } = props;
+  const { text, type, className, variant, to, disabled } = props;
   const buttonStyles = classNames(
     'inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md  focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm',
     variant,

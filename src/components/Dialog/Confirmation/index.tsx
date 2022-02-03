@@ -1,11 +1,11 @@
-import { FC, memo } from 'react';
+import { FC, memo, useRef } from 'react';
 
 import { closeDialog } from '@actions/core/modalActions';
 import { useAppState } from '@context/Provider';
 
 import ModalLayout from '../ModalLayout';
 import { Button, BUTTON_VARIANT } from '@components';
-import { setLSValue } from '@utils/storage';
+import { getLSValue, setLSValue } from '@utils/storage';
 import { CALCULATION_DEFAULT, LS_KEYS } from '@constants';
 import { getSuccessFetchData } from '@actions/data';
 
@@ -21,41 +21,36 @@ const Confirmation: FC<IProps> = (props) => {
     name,
     data: { calculatedPrice, totalDays, data, isBook },
   } = props;
-  //   console.log('=props', calculatedPrice, totalDays, data);
 
-  const [state, dispatch] = useAppState();
-  const {
-    products: { items },
-  } = state;
+  const [, dispatch] = useAppState();
+
+  const dataRef = useRef<any>(getLSValue(LS_KEYS.USER_DATA));
 
   const onCloseModal = () => {
     dispatch(closeDialog(name));
   };
 
-  // console.log('=====', state);
   const onSubmit = () => {
-    const findIndex = items.data.findIndex((it: any) => it.code === data.code);
-    items.data[findIndex].availability = false;
-    items.data[findIndex].bookedFor = isBook ? totalDays : 0;
-    // console.log('===', isBook);
+    const findIndex = dataRef.current.findIndex(
+      (it: any) => it.code === data.code,
+    );
+    dataRef.current[findIndex].availability = !isBook;
+    dataRef.current[findIndex].bookedFor = isBook ? totalDays : 0;
 
-    const durability = items.data[findIndex].durability;
-    const type = items.data[findIndex].type;
+    const durability = dataRef.current[findIndex].durability;
+    const type = dataRef.current[findIndex].type;
+    if (type === 'plain' && !isBook) {
+      dataRef.current[findIndex].durability = durability - totalDays;
+    }
+    if (type === 'meeter' && !isBook) {
+      dataRef.current[findIndex].durability =
+        durability -
+        2 * totalDays -
+        ((CALCULATION_DEFAULT.MILAGE_PER_DAY * totalDays) / 100) * 2;
+    }
 
-    // if (type === 'plain' && !isBook) {
-    //   items.data[findIndex].durability = durability - totalDays;
-    // }
-    // if (type === 'meeter' && !isBook) {
-    //   items.data[findIndex].durability =
-    //     durability -
-    //     2 * totalDays -
-    //     ((CALCULATION_DEFAULT.MILAGE_PER_DAY * totalDays) / 100) * 2;
-    // }
-
-    console.log('+++', items.data[findIndex]);
-
-    setLSValue(LS_KEYS.USER_DATA, items.data);
-    dispatch(getSuccessFetchData(items.data));
+    setLSValue(LS_KEYS.USER_DATA, dataRef.current);
+    dispatch(getSuccessFetchData(dataRef.current));
     onCloseModal();
   };
 

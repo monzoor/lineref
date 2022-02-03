@@ -7,7 +7,7 @@ import { useAppState } from '@context/Provider';
 import ModalLayout from '../ModalLayout';
 import { Select, Form, Button, BUTTON_VARIANT, Input } from '@components';
 import { FIELDS } from '@constants/fields';
-import { priceCalculation, totalDaysCalculator } from '@utils';
+import { priceCalculation } from '@utils';
 import { DIALOGS } from '@constants/dialogs';
 import { CALCULATION_DEFAULT } from '@constants';
 
@@ -30,7 +30,7 @@ const ReturnDialog: FC<IProps> = (props) => {
   } = methods;
 
   const {
-    products: { unAvailableItems, items },
+    products: { unAvailableItems },
   } = state;
 
   const onCloseModal = () => {
@@ -41,10 +41,7 @@ const ReturnDialog: FC<IProps> = (props) => {
     dataItem.current = state.products.items.data.find(
       (it: any) => it.code === data.return,
     );
-    // let { availability } = dataItem.current;
     dataItem.current.availability = true;
-
-    // console.log('===', priceCalculation({ ...dataItem.current, ...data }));
 
     const newData = {
       calculatedPrice: priceCalculation({ ...dataItem.current, ...data }),
@@ -55,10 +52,6 @@ const ReturnDialog: FC<IProps> = (props) => {
     dispatch(closeDialog(name));
     dispatch(openDialog(DIALOGS.CONFIRMATION, { ...newData, isBook: false }));
   };
-
-  //   useEffect(() => {
-  //     console.log('====', items);
-  //   }, [items]);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -74,9 +67,7 @@ const ReturnDialog: FC<IProps> = (props) => {
       }
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
-
-  // console.log('=====', state);
+  }, [watch, setValue, state.products.items.data]);
 
   return (
     <ModalLayout open={isOpen} dialogName={name}>

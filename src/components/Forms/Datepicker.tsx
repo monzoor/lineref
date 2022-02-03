@@ -34,7 +34,7 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
   useEffect(() => {
     if (Object.keys(Object.fromEntries(searchParams)).length === 0) return;
 
-    const { start, end, status } = Object.fromEntries(searchParams);
+    const { start, end } = Object.fromEntries(searchParams);
     const startDate: Date = new Date(start);
     const endDate: Date = new Date(end);
     setStartDate(startDate);

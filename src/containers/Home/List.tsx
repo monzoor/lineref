@@ -1,14 +1,11 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
+
+import { LS_KEYS } from '@constants';
+import { getLSValue } from '@utils/storage';
 import TableHeader from './TableHeader';
 
-// TODO: fixed
-interface Props {
-  [key: string]: any;
-}
-
-// TODO: rerender issue
-const Lists: FC<Props> = ({ itemList }) => {
-  console.log('==ren list===');
+const Lists: FC = () => {
+  const itemList = getLSValue(LS_KEYS.USER_DATA);
 
   return (
     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
