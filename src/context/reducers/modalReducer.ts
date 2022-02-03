@@ -70,8 +70,10 @@ const modalReducer = (state: IReducerState, action: IReducerAction) => {
   switch (action.type) {
     case DIALOG.OPEN:
       return {
-        modal: { ...onDialogOpen(state, action.name, action.data) },
-        modalOpened: true,
+        modal: {
+          ...onDialogOpen(state, action.name, action.data),
+          modalOpened: true,
+        },
       };
 
     case DIALOG.CLOSE:
@@ -81,8 +83,10 @@ const modalReducer = (state: IReducerState, action: IReducerAction) => {
       };
 
       return {
-        modal: { ...newState },
-        modalOpened: isModalOpened(newState),
+        modal: {
+          ...newState,
+          modalOpened: isModalOpened(newState),
+        },
       };
 
     case DIALOG.CLOSE_ALL:
