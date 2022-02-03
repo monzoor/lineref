@@ -1,16 +1,19 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { openDialog } from '@actions/core/modalActions';
 import { DIALOGS } from '@constants/dialogs';
-import { useAppState } from '@context/Provider';
 import { Button, BUTTON_VARIANT } from '@components';
 
-const ModalItems: FC = () => {
-  const [state, dispatch] = useAppState();
-
+interface IProps {
+  dispatch: any;
+}
+const ModalItems: FC<IProps> = ({ dispatch }) => {
   const triggerModal = () => {
     dispatch(openDialog(DIALOGS.BOOK));
   };
+
+  console.log('==ren button');
+
   return (
     <div className="grid grid-cols-2 w-6/12 gap-4 items-end">
       <Button
@@ -29,4 +32,4 @@ const ModalItems: FC = () => {
   );
 };
 
-export default ModalItems;
+export default memo(ModalItems);

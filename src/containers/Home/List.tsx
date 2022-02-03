@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import TableHeader from './TableHeader';
 
 // TODO: fixed
@@ -6,7 +6,7 @@ interface Props {
   [key: string]: any;
 }
 const Lists: FC<Props> = ({ itemList }) => {
-  console.log('==sas===');
+  console.log('==ren list===');
 
   return (
     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -74,4 +74,4 @@ const Lists: FC<Props> = ({ itemList }) => {
   );
 };
 
-export default Lists;
+export default memo(Lists);

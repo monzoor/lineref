@@ -4,11 +4,11 @@ import { FC } from 'react';
 
 import { closeDialog } from '@actions/core/modalActions';
 import { useAppState } from '@context/Provider';
-// import { Button, Fields, Form, BUTTON_COLOR } from '@components';
 
 import ModalLayout from '../ModalLayout';
-import { Select, Form } from '@components';
+import { Select, Form, DatePickers, Button, BUTTON_VARIANT } from '@components';
 import { FIELDS } from '@constants/fields';
+import { priceCalculation, totalDaysCalculator } from '@utils';
 
 interface IProps {
   name: string;
@@ -33,53 +33,69 @@ const AuthDialog: FC<IProps> = (props) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log('----', data);
+    const dataItem = state.products.items.data.find(
+      (it: any) => it.code === data.book,
+    );
+    const totalDays = totalDaysCalculator(data.startDate, data.endDate);
+
+    const newData = {
+      calculatedPrice: priceCalculation({ ...dataItem, ...data }),
+      totalDays,
+      data: dataItem,
+    };
+    console.log('----', newData);
   };
 
-  console.log('=====', state);
+  // console.log('=====', state);
 
   return (
     <ModalLayout open={isOpen} dialogName={name}>
-      <div
-        onClick={onCloseModal}
-        className="text-white w-12 h-12 p-3 text-right absolute z-20 right-0 cursor-pointer"
-      >
-        X
-      </div>
-
       <div className="min-h-screen flex justify-center items-center">
         <div className="p-8 flex-1">
-          <div className="relative w-1/2 bg-white rounded-3xl mx-auto overflow-hidden shadow-xl">
+          <div className="relative w-full md:w-1/2  bg-white rounded-3xl mx-auto overflow-hidden shadow-xl">
+            <div
+              onClick={onCloseModal}
+              className=" w-12 h-12 p-3 text-2xl text-right absolute z-20 right-0 cursor-pointer"
+            >
+              X
+            </div>
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
                 Book an item
               </h3>
-              {/* <div className="mt-2 max-w-xl text-sm text-gray-500">
+              <div className="mt-2 max-w-xl text-sm text-gray-500">
                 <p>
-                  Once you delete your account, you will lose all data
-                  associated with it.
+                  Please select all the fields and submit on the button to get
+                  the price.
                 </p>
-              </div> */}
+              </div>
               <Form methods={methods} onSubmit={onSubmit}>
                 {(props: any) => (
                   <>
-                    <div className="mt-5">
+                    <div className="mt-5 mb-3">
                       <Select
                         {...props}
                         label="Select an item to book"
                         name={FIELDS.BOOKING.BOOKING}
                         id={FIELDS.BOOKING.BOOKING}
-                        defaultValue="0"
+                        defaultValue=""
                         options={availableItems}
+                        required
                       />
                     </div>
-                    <div className="mt-5">
-                      <button
+                    <DatePickers {...props} />
+                    <div className="mt-5 flex gap-4 justify-end">
+                      <Button
+                        onClick={onCloseModal}
+                        variant={BUTTON_VARIANT.CANCEL}
+                        text="No"
+                      />
+                      <Button
                         type="submit"
-                        className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-                      >
-                        Delete account
-                      </button>
+                        variant={BUTTON_VARIANT.SUCCESS}
+                        text="Yes"
+                        disabled={!isDirty || !isValid}
+                      />
                     </div>
                   </>
                 )}

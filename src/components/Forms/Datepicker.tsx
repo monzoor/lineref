@@ -27,8 +27,8 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
   const [endDate, setEndDate] = useState<any>(null);
 
   useEffect(() => {
-    setValue(FIELDS.FILTER.START_DATE, startDate);
-    setValue(FIELDS.FILTER.END_DATE, endDate);
+    setValue(FIELDS.BOOKING.START_DATE, startDate);
+    setValue(FIELDS.BOOKING.END_DATE, endDate);
   }, [startDate, endDate, setValue]);
 
   useEffect(() => {
@@ -39,19 +39,16 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
     const endDate: Date = new Date(end);
     setStartDate(startDate);
     setEndDate(endDate);
-
-    setValue(FIELDS.FILTER.STATUS, status);
   }, [searchParams, setValue]);
 
   useEffect(() => {
     const subscription = watch((value) => {
-      trigger(FIELDS.FILTER.END_DATE, {
+      trigger(FIELDS.BOOKING.END_DATE, {
         shouldFocus: true,
       });
-      trigger(FIELDS.FILTER.START_DATE, {
+      trigger(FIELDS.BOOKING.START_DATE, {
         shouldFocus: true,
       });
-      trigger(FIELDS.FILTER.STATUS, { shouldFocus: true });
     });
 
     return () => subscription.unsubscribe();
@@ -62,17 +59,19 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
       <input
         type="hidden"
         id="startDate"
-        {...register(FIELDS.FILTER.START_DATE, {
+        {...register(FIELDS.BOOKING.START_DATE, {
           required: 'This is required',
         })}
       />
       <input
         type="hidden"
         id="endDate"
-        {...register(FIELDS.FILTER.END_DATE, { required: 'This is required' })}
+        {...register(FIELDS.BOOKING.END_DATE, { required: 'This is required' })}
       />
-      <div className="grid grid-cols-10 items-center">
-        <label className="text-primary mr-2 col-span-2">Form</label>
+      <div className="grid grid-cols-1 items-center mb-3">
+        <label className="block text-sm font-medium text-gray-700 border-red-500">
+          Form
+        </label>
         <div className="w-full col-span-8 ">
           <DatePicker
             dateFormat="dd MMM yyyy"
@@ -87,12 +86,12 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
             selectsStart
             startDate={startDate}
             endDate={endDate}
-            maxDate={new Date()}
+            minDate={new Date()}
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
             withPortal
-            className="px-5 py-2 w-full border border-secondary appearance-none shadow-sm "
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-black focus:outline-none sm:text-sm rounded-md"
           />
         </div>
       </div>
@@ -101,8 +100,10 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
           <ErrorMessage errors={errors} name={FIELDS.FILTER.START_DATE} />
         </span>
       )}
-      <div className="grid grid-cols-10 items-center">
-        <label className="text-primary mr-2 col-span-2">To</label>
+      <div className="grid grid-cols-1 items-center">
+        <label className="block text-sm font-medium text-gray-700 border-red-500">
+          To
+        </label>
         <div className="w-full col-span-8 ">
           <DatePicker
             dateFormat="dd MMM yyyy"
@@ -112,12 +113,11 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
             selectsEnd
             startDate={startDate}
             endDate={endDate}
-            minDate={startDate}
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
             withPortal
-            className="px-5 py-2 w-full border border-secondary appearance-none shadow-sm "
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-black focus:outline-none sm:text-sm rounded-md"
           />
         </div>
       </div>
