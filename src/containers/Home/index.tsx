@@ -49,9 +49,9 @@ const Home: FC = () => {
     <Page>
       <div className="container mx-auto mt-5">
         <div className="flex flex-col">
-          <ModalItems dispatch={dispatch} />
-
           <Lists />
+
+          <ModalItems dispatch={dispatch} />
         </div>
       </div>
     </Page>

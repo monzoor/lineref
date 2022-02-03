@@ -1,7 +1,5 @@
 import dayjs from 'dayjs';
-
-export const getAssetUrl = (name: string) =>
-  `${process.env.PUBLIC_URL}/assets/${name}`;
+import { CALCULATION_DEFAULT } from '@constants';
 
 export const prepareSelectValues = (items: string[]) =>
   items.map((item: any) => ({
@@ -47,7 +45,31 @@ export const priceCalculation = ({
   return finalPrice;
 };
 
-// export const returnCalculation = (data: any) => {
-//   const { hasDiscount, minimum_rent_period, price, startDate, endDate } = data;
-//   return 1;
-// };
+export const processDataCalculation = (data: any) => {
+  const { newDataRef, findIndex, isBook, totalDays, mileage } = data;
+
+  newDataRef[findIndex].availability = !isBook;
+  newDataRef[findIndex].bookedFor = isBook ? totalDays : 0;
+
+  const durability = newDataRef[findIndex].durability;
+  const type = newDataRef[findIndex].type;
+
+  if (!isBook) {
+    const currentMileage = newDataRef[findIndex].mileage
+      ? newDataRef[findIndex].mileage
+      : 0;
+    newDataRef[findIndex].mileage = currentMileage + mileage;
+  }
+
+  if (type === 'plain' && !isBook) {
+    newDataRef[findIndex].durability = durability - totalDays;
+  }
+  if (type === 'meeter' && !isBook) {
+    newDataRef[findIndex].durability =
+      durability -
+      2 * totalDays -
+      ((CALCULATION_DEFAULT.MILAGE_PER_DAY * totalDays) / 100) * 2;
+  }
+
+  return newDataRef;
+};

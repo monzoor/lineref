@@ -16,7 +16,7 @@ const ModalItems: FC<IProps> = ({ dispatch }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 w-6/12 gap-4 items-end">
+    <div className="flex gap-4 justify-end my-5">
       <Button
         onClick={triggerModalBooking}
         variant={BUTTON_VARIANT.PRIMARY}

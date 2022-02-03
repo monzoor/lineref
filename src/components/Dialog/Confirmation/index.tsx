@@ -6,8 +6,9 @@ import { useAppState } from '@context/Provider';
 import ModalLayout from '../ModalLayout';
 import { Button, BUTTON_VARIANT } from '@components';
 import { getLSValue, setLSValue } from '@utils/storage';
-import { CALCULATION_DEFAULT, LS_KEYS } from '@constants';
+import { LS_KEYS } from '@constants';
 import { getSuccessFetchData } from '@actions/data';
+import { processDataCalculation } from '@utils';
 
 interface IProps {
   name: string;
@@ -31,31 +32,16 @@ const Confirmation: FC<IProps> = (props) => {
   };
 
   const onSubmit = () => {
-    const findIndex = dataRef.current.findIndex(
-      (it: any) => it.code === data.code,
-    );
-    dataRef.current[findIndex].availability = !isBook;
-    dataRef.current[findIndex].bookedFor = isBook ? totalDays : 0;
+    const newDataRef = dataRef.current;
+    const findIndex = newDataRef.findIndex((it: any) => it.code === data.code);
 
-    const durability = dataRef.current[findIndex].durability;
-    const type = dataRef.current[findIndex].type;
-
-    if (!isBook) {
-      const currentMileage = dataRef.current[findIndex].mileage
-        ? dataRef.current[findIndex].mileage
-        : 0;
-      dataRef.current[findIndex].mileage = currentMileage + mileage;
-    }
-
-    if (type === 'plain' && !isBook) {
-      dataRef.current[findIndex].durability = durability - totalDays;
-    }
-    if (type === 'meeter' && !isBook) {
-      dataRef.current[findIndex].durability =
-        durability -
-        2 * totalDays -
-        ((CALCULATION_DEFAULT.MILAGE_PER_DAY * totalDays) / 100) * 2;
-    }
+    dataRef.current = processDataCalculation({
+      newDataRef,
+      findIndex,
+      isBook,
+      totalDays,
+      mileage,
+    });
 
     setLSValue(LS_KEYS.USER_DATA, dataRef.current);
     dispatch(getSuccessFetchData(dataRef.current));
