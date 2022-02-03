@@ -38,7 +38,9 @@ export const priceCalculation = ({
   const isDiscountApplicable =
     hasDiscount && minimum_rent_period < totalDays ? true : false;
   const priceValue = price * totalDays;
-  const finalPrice = isDiscountApplicable ? priceValue - priceValue * 0.05 : 0;
+  const finalPrice = isDiscountApplicable
+    ? priceValue - priceValue * 0.05
+    : priceValue;
 
   return finalPrice;
 };

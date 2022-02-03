@@ -1,14 +1,14 @@
+import { FC, useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { FC } from 'react';
-
-import { closeDialog } from '@actions/core/modalActions';
+import { closeDialog, openDialog } from '@actions/core/modalActions';
 import { useAppState } from '@context/Provider';
 
 import ModalLayout from '../ModalLayout';
 import { Select, Form, DatePickers, Button, BUTTON_VARIANT } from '@components';
 import { FIELDS } from '@constants/fields';
 import { priceCalculation, totalDaysCalculator } from '@utils';
+import { DIALOGS } from '@constants/dialogs';
 
 interface IProps {
   name: string;
@@ -16,10 +16,14 @@ interface IProps {
   data?: any;
   isHided?: boolean;
 }
-const AuthDialog: FC<IProps> = (props) => {
+const BookDialog: FC<IProps> = (props) => {
   const { isOpen, name } = props;
   const methods = useForm({ mode: 'onChange' });
+  const [rentalPeriodError, setRentalPeriodError] = useState(false);
+  const dataItem = useRef<IProduct>({} as any);
+
   const {
+    watch,
     formState: { isDirty, isValid },
   } = methods;
 
@@ -33,18 +37,33 @@ const AuthDialog: FC<IProps> = (props) => {
   };
 
   const onSubmit = (data: any) => {
-    const dataItem = state.products.items.data.find(
+    dataItem.current = state.products.items.data.find(
       (it: any) => it.code === data.book,
     );
+    const miniMumRentPeriod = dataItem.current?.minimum_rent_period;
+
     const totalDays = totalDaysCalculator(data.startDate, data.endDate);
+    if (totalDays < miniMumRentPeriod) {
+      setRentalPeriodError(true);
+      return;
+    }
+    if (rentalPeriodError) {
+      setRentalPeriodError(false);
+    }
 
     const newData = {
-      calculatedPrice: priceCalculation({ ...dataItem, ...data }),
+      calculatedPrice: priceCalculation({ ...dataItem.current, ...data }),
       totalDays,
-      data: dataItem,
+      data: dataItem.current,
     };
-    console.log('----', newData);
+    dispatch(closeDialog(name));
+    dispatch(openDialog(DIALOGS.CONFIRMATION, { ...newData, isBook: true }));
   };
+
+  useEffect(() => {
+    const subscription = watch(() => setRentalPeriodError(false));
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   // console.log('=====', state);
 
@@ -61,7 +80,7 @@ const AuthDialog: FC<IProps> = (props) => {
             </div>
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
-                Book an item
+                Book a product
               </h3>
               <div className="mt-2 max-w-xl text-sm text-gray-500">
                 <p>
@@ -84,6 +103,12 @@ const AuthDialog: FC<IProps> = (props) => {
                       />
                     </div>
                     <DatePickers {...props} />
+                    {rentalPeriodError && (
+                      <span className="text-xs mt-2 text-red-500 block capitalize text-left mb-2">
+                        You must book at least{' '}
+                        {dataItem.current?.minimum_rent_period} days
+                      </span>
+                    )}
                     <div className="mt-5 flex gap-4 justify-end">
                       <Button
                         onClick={onCloseModal}
@@ -108,4 +133,4 @@ const AuthDialog: FC<IProps> = (props) => {
   );
 };
 
-export default AuthDialog;
+export default BookDialog;

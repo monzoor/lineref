@@ -2,9 +2,11 @@ import { DIALOGS as DIALOGS_NAMES } from '@constants/dialogs';
 import { useAppState } from '@context/Provider';
 
 import Book from '@components/Dialog/Book';
+import Confirmation from './Confirmation';
 
 const DIALOG_COMPONENTS = {
   [DIALOGS_NAMES.BOOK]: Book,
+  [DIALOGS_NAMES.CONFIRMATION]: Confirmation,
 };
 
 const Dialogs = () => {

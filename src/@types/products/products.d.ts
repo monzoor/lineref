@@ -7,4 +7,5 @@ interface IProduct {
   max_durability: number;
   mileage: number;
   hasDiscount: boolean;
+  minimum_rent_period: number;
 }
