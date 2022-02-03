@@ -8,8 +8,11 @@ interface IProps {
   dispatch: any;
 }
 const ModalItems: FC<IProps> = ({ dispatch }) => {
-  const triggerModal = () => {
+  const triggerModalBooking = () => {
     dispatch(openDialog(DIALOGS.BOOK));
+  };
+  const triggerModalReturn = () => {
+    dispatch(openDialog(DIALOGS.RETURN));
   };
 
   console.log('==ren button');
@@ -17,13 +20,13 @@ const ModalItems: FC<IProps> = ({ dispatch }) => {
   return (
     <div className="grid grid-cols-2 w-6/12 gap-4 items-end">
       <Button
-        onClick={triggerModal}
+        onClick={triggerModalBooking}
         variant={BUTTON_VARIANT.PRIMARY}
         type="button"
         text="Book"
       />
       <Button
-        onClick={triggerModal}
+        onClick={triggerModalReturn}
         variant={BUTTON_VARIANT.PRIMARY}
         type="button"
         text="Return"

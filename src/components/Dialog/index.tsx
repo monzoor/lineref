@@ -3,10 +3,12 @@ import { useAppState } from '@context/Provider';
 
 import Book from '@components/Dialog/Book';
 import Confirmation from './Confirmation';
+import ReturnDialog from './Return';
 
 const DIALOG_COMPONENTS = {
   [DIALOGS_NAMES.BOOK]: Book,
   [DIALOGS_NAMES.CONFIRMATION]: Confirmation,
+  [DIALOGS_NAMES.RETURN]: ReturnDialog,
 };
 
 const Dialogs = () => {

@@ -6,7 +6,7 @@ import { useAppState } from '@context/Provider';
 import ModalLayout from '../ModalLayout';
 import { Button, BUTTON_VARIANT } from '@components';
 import { setLSValue } from '@utils/storage';
-import { LS_KEYS } from '@constants';
+import { CALCULATION_DEFAULT, LS_KEYS } from '@constants';
 import { getSuccessFetchData } from '@actions/data';
 
 interface IProps {
@@ -19,9 +19,9 @@ const Confirmation: FC<IProps> = (props) => {
   const {
     isOpen,
     name,
-    data: { calculatedPrice, totalDays, data },
+    data: { calculatedPrice, totalDays, data, isBook },
   } = props;
-  console.log('=props', data);
+  //   console.log('=props', calculatedPrice, totalDays, data);
 
   const [state, dispatch] = useAppState();
   const {
@@ -36,7 +36,23 @@ const Confirmation: FC<IProps> = (props) => {
   const onSubmit = () => {
     const findIndex = items.data.findIndex((it: any) => it.code === data.code);
     items.data[findIndex].availability = false;
-    items.data[findIndex].bookedFor = totalDays;
+    items.data[findIndex].bookedFor = isBook ? totalDays : 0;
+    // console.log('===', isBook);
+
+    const durability = items.data[findIndex].durability;
+    const type = items.data[findIndex].type;
+
+    // if (type === 'plain' && !isBook) {
+    //   items.data[findIndex].durability = durability - totalDays;
+    // }
+    // if (type === 'meeter' && !isBook) {
+    //   items.data[findIndex].durability =
+    //     durability -
+    //     2 * totalDays -
+    //     ((CALCULATION_DEFAULT.MILAGE_PER_DAY * totalDays) / 100) * 2;
+    // }
+
+    console.log('+++', items.data[findIndex]);
 
     setLSValue(LS_KEYS.USER_DATA, items.data);
     dispatch(getSuccessFetchData(items.data));
@@ -56,7 +72,7 @@ const Confirmation: FC<IProps> = (props) => {
             </div>
             <div className="px-4 py-5 sm:p-6 text-center">
               <h3 className="text-xl mb-4 leading-6 font-medium">
-                {data.isBook ? 'Book a product' : 'Return a product'}
+                {isBook ? 'Book a product' : 'Return a product'}
               </h3>
 
               <p className="text-lg">
@@ -64,7 +80,7 @@ const Confirmation: FC<IProps> = (props) => {
                 <span className="font-bold text-indigo-500">
                   ${calculatedPrice}{' '}
                 </span>
-                for {totalDays} days.
+                {isBook && `for ${totalDays} days`}
                 <br />
                 Do you want to continue?
               </p>

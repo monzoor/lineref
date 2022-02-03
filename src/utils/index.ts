@@ -16,12 +16,13 @@ export const processNewData = (data: string[]) =>
     bookedFor: item.availability ? 0 : Math.floor(Math.random() * 10),
   }));
 
-interface ITest {
+interface IPriceCalculation {
   hasDiscount: boolean;
   minimum_rent_period: number;
   price: number;
   startDate: Date;
   endDate: Date;
+  usedMileage?: number;
 }
 
 export const totalDaysCalculator = (startDate: Date, endDate: Date) =>
@@ -33,8 +34,9 @@ export const priceCalculation = ({
   price,
   startDate,
   endDate,
-}: ITest) => {
-  const totalDays = totalDaysCalculator(startDate, endDate);
+  usedMileage,
+}: IPriceCalculation) => {
+  const totalDays = usedMileage || totalDaysCalculator(startDate, endDate);
   const isDiscountApplicable =
     hasDiscount && minimum_rent_period < totalDays ? true : false;
   const priceValue = price * totalDays;
@@ -43,4 +45,9 @@ export const priceCalculation = ({
     : priceValue;
 
   return finalPrice;
+};
+
+export const returnCalculation = (data: any) => {
+  const { hasDiscount, minimum_rent_period, price, startDate, endDate } = data;
+  return 1;
 };

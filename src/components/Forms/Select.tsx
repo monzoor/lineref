@@ -47,7 +47,9 @@ const Select: FC<ISelect> = ({
           defaultValue={defaultValue}
           {...register(name, validations)}
         >
-          <option value="">Please select an item</option>
+          <option disabled value="">
+            Please select an item
+          </option>
           {options.map((option: any, index: number) => (
             <option key={index} value={option.value}>
               {option.name}

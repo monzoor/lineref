@@ -16,6 +16,7 @@ interface I_PROPS {
   icon?: string;
   required?: boolean;
   value?: string;
+  disabled?: boolean;
   validation?: {
     [key: string]: any;
   };
@@ -33,6 +34,7 @@ const Input: FC<I_PROPS> = forwardRef(
       icon,
       required,
       value,
+      disabled,
       validation = {},
     },
     ref,
@@ -43,7 +45,7 @@ const Input: FC<I_PROPS> = forwardRef(
     const errors = formState?.errors;
 
     const inputClassNames = classNames(
-      'appearance-none border border-primary shadow-sm w-full col-span-8 px-5 py-2',
+      'mt-1 block w-full pl-3 pr-10 py-2 text-base border border-black focus:outline-none sm:text-sm rounded-md',
       { 'h-36': component === 'textarea' },
       { 'h-10': component !== 'textarea' },
       { 'pl-10': icon },
@@ -57,15 +59,13 @@ const Input: FC<I_PROPS> = forwardRef(
 
     return (
       <div ref={ref as React.RefObject<HTMLDivElement>}>
-        <div
-          className={`grid relative ${
-            label ? 'grid-cols-10' : 'grid-cols-1'
-          } items-center`}
-        >
+        <div className={`grid relative grid-cols-1 items-center`}>
           {label && (
-            <label htmlFor={id} className="text-primary mr-2 col-span-2">
+            <label
+              htmlFor={id}
+              className="block text-sm font-medium text-gray-700 border-red-500"
+            >
               {label}
-              {required && <sup className="text-red-500">*</sup>}
             </label>
           )}
           {icon && (
@@ -80,6 +80,7 @@ const Input: FC<I_PROPS> = forwardRef(
             className={inputClassNames}
             placeholder={placeholder}
             defaultValue={value}
+            disabled={disabled}
             {...register(name, validations)}
           />
         </div>

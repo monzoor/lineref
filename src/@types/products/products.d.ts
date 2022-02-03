@@ -8,4 +8,6 @@ interface IProduct {
   mileage: number;
   hasDiscount: boolean;
   minimum_rent_period: number;
+  bookedFor: number;
+  price: number;
 }
