@@ -26,7 +26,7 @@ const ModalItems: FC<IProps> = ({ dispatch }) => {
         onClick={triggerModal}
         variant={BUTTON_VARIANT.PRIMARY}
         type="button"
-        text="Book"
+        text="Return"
       />
     </div>
   );

@@ -5,6 +5,9 @@ import { useAppState } from '@context/Provider';
 
 import ModalLayout from '../ModalLayout';
 import { Button, BUTTON_VARIANT } from '@components';
+import { setLSValue } from '@utils/storage';
+import { LS_KEYS } from '@constants';
+import { getSuccessFetchData } from '@actions/data';
 
 interface IProps {
   name: string;
@@ -13,20 +16,32 @@ interface IProps {
   isHided?: boolean;
 }
 const Confirmation: FC<IProps> = (props) => {
-  const { isOpen, name, data } = props;
+  const {
+    isOpen,
+    name,
+    data: { calculatedPrice, totalDays, data },
+  } = props;
   console.log('=props', data);
 
   const [state, dispatch] = useAppState();
-  //   const {
-  //     products: { availableItems },
-  //   } = state;
+  const {
+    products: { items },
+  } = state;
 
   const onCloseModal = () => {
     dispatch(closeDialog(name));
   };
 
   // console.log('=====', state);
-  const onSubmit = (data: any) => {};
+  const onSubmit = () => {
+    const findIndex = items.data.findIndex((it: any) => it.code === data.code);
+    items.data[findIndex].availability = false;
+    items.data[findIndex].bookedFor = totalDays;
+
+    setLSValue(LS_KEYS.USER_DATA, items.data);
+    dispatch(getSuccessFetchData(items.data));
+    onCloseModal();
+  };
 
   return (
     <ModalLayout open={isOpen} dialogName={name}>
@@ -47,9 +62,9 @@ const Confirmation: FC<IProps> = (props) => {
               <p className="text-lg">
                 Your estimated price is{' '}
                 <span className="font-bold text-indigo-500">
-                  ${data.calculatedPrice}
+                  ${calculatedPrice}{' '}
                 </span>
-                .
+                for {totalDays} days.
                 <br />
                 Do you want to continue?
               </p>
