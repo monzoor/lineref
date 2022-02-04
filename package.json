@@ -56,5 +56,10 @@
   },
   "externals": {
     "react-hook-form": "react-hook-form"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.+)": "<rootDir>/src/$1"
+    }
   }
 }

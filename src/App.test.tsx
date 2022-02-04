@@ -8,6 +8,6 @@ test('Render home page', async () => {
 
   expect(element).toBeInTheDocument();
   await act(() => promise);
-  const homeText = screen.getByText(/Analyzer/i);
+  const homeText = screen.getByText(/Item/i);
   expect(homeText).toBeInTheDocument();
 });
