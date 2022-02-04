@@ -25,7 +25,7 @@ interface I_PROPS {
 const Input: FC<I_PROPS> = forwardRef(
   (
     {
-      component,
+      component = 'input',
       id = '',
       type,
       name,
