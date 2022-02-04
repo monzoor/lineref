@@ -6,8 +6,6 @@ interface I_CHECKBOX_PROPS {
   name: string;
   label: string;
   checked?: boolean;
-
-  //   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CheckBox: FC<I_CHECKBOX_PROPS> = ({ id, name, checked, label }) => {
