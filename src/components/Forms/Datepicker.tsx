@@ -1,5 +1,4 @@
 import { useState, useEffect, FC } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-datepicker';
@@ -7,21 +6,18 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { FIELDS } from '@constants/fields';
+import 'react-datepicker/dist/react-datepicker.css';
 
 dayjs.extend(localizedFormat);
 
-interface I_PROPS {
-  formState: any;
-  onSubmit: (data: any) => void;
-  onReset: () => void;
-  handleModal: () => void;
-}
-
-const DatePickers: FC<I_PROPS> = ({ ...props }) => {
-  const [searchParams] = useSearchParams();
-
-  const { register, setValue, watch, trigger } = useFormContext();
-  const errors = props.formState?.errors;
+const DatePickers: FC = () => {
+  const {
+    register,
+    setValue,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
 
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);
@@ -32,17 +28,7 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
   }, [startDate, endDate, setValue]);
 
   useEffect(() => {
-    if (Object.keys(Object.fromEntries(searchParams)).length === 0) return;
-
-    const { start, end } = Object.fromEntries(searchParams);
-    const startDate: Date = new Date(start);
-    const endDate: Date = new Date(end);
-    setStartDate(startDate);
-    setEndDate(endDate);
-  }, [searchParams, setValue]);
-
-  useEffect(() => {
-    const subscription = watch((value) => {
+    const subscription = watch(() => {
       trigger(FIELDS.BOOKING.END_DATE, {
         shouldFocus: true,
       });
@@ -59,6 +45,7 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
       <input
         type="hidden"
         id="startDate"
+        data-testid="startDate"
         {...register(FIELDS.BOOKING.START_DATE, {
           required: 'This is required',
         })}
@@ -66,14 +53,19 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
       <input
         type="hidden"
         id="endDate"
+        data-testid="endDate"
         {...register(FIELDS.BOOKING.END_DATE, { required: 'This is required' })}
       />
       <div className="grid grid-cols-1 items-center mb-3">
-        <label className="block text-sm font-medium text-gray-700 border-red-500">
+        <label
+          htmlFor="startDatePicker"
+          className="block text-sm font-medium text-gray-700 border-red-500"
+        >
           Form
         </label>
         <div className="w-full col-span-8 ">
           <DatePicker
+            id="startDatePicker"
             dateFormat="dd MMM yyyy"
             placeholderText={dayjs(new Date())
               .startOf('M')
@@ -101,15 +93,21 @@ const DatePickers: FC<I_PROPS> = ({ ...props }) => {
         </span>
       )}
       <div className="grid grid-cols-1 items-center">
-        <label className="block text-sm font-medium text-gray-700 border-red-500">
+        <label
+          htmlFor="endDatePicker"
+          className="block text-sm font-medium text-gray-700 border-red-500"
+        >
           To
         </label>
         <div className="w-full col-span-8 ">
           <DatePicker
+            id="endDatePicker"
             dateFormat="dd MMM yyyy"
             placeholderText={dayjs(new Date()).endOf('M').format('DD MMM YYYY')}
             selected={endDate}
-            onChange={(date: any) => setEndDate(date)}
+            onChange={(date: any) => {
+              setEndDate(date);
+            }}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
