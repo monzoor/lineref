@@ -12,3 +12,5 @@ export { BUTTON_VARIANT } from './Buttons';
 export { default as Spinner } from './Spinner';
 
 export { default as Dialog } from './Dialog';
+
+export { default as ErrorBoundary } from './ErrorBoundary';

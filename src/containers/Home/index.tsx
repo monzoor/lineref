@@ -1,7 +1,7 @@
 import { FC, memo, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 
-import { Page, Spinner } from '@components';
+import { Page, Spinner, ErrorBoundary } from '@components';
 import { LS_KEYS } from '@constants';
 import { useAppState } from '@context/Provider';
 import { getLSValue, removeLSValue, setLSValue } from '@utils/storage';
@@ -32,8 +32,9 @@ const Home: FC = () => {
           dispatch(getSuccessFetchData(newDataSet));
         } catch (error) {
           removeLSValue(LS_KEYS.USER_DATA);
-          window.location.assign(PAGES.ERROR);
           Sentry.captureException(error);
+
+          window.location.assign(PAGES.ERROR);
         }
       };
       fetchItems();
@@ -47,15 +48,17 @@ const Home: FC = () => {
   }
 
   return (
-    <Page>
-      <div className="container mx-auto mt-5">
-        <div className="flex flex-col">
-          <Lists />
+    <ErrorBoundary>
+      <Page>
+        <div className="container mx-auto mt-5">
+          <div className="flex flex-col">
+            <Lists />
 
-          <ModalItems dispatch={dispatch} />
+            <ModalItems dispatch={dispatch} />
+          </div>
         </div>
-      </div>
-    </Page>
+      </Page>
+    </ErrorBoundary>
   );
 };
 
