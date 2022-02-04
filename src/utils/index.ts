@@ -1,20 +1,20 @@
 import dayjs from 'dayjs';
 import { CALCULATION_DEFAULT } from '@constants';
 
-export const prepareSelectValues = (items: string[]) =>
+export const prepareSelectValues = (items: Array<any>) =>
   items.map((item: any) => ({
     name: `${item.name} - ${item.code}`,
     value: item.code,
   }));
 
-export const processNewData = (data: string[]) =>
+export const processNewData = (data: Array<any>) =>
   data.map((item: any) => ({
     ...item,
     hasDiscount: Math.random() < 0.5,
     bookedFor: item.availability ? 0 : Math.floor(Math.random() * 10),
   }));
 
-interface IPriceCalculation {
+export interface IPriceCalculation {
   hasDiscount: boolean;
   minimum_rent_period: number;
   price: number;
@@ -64,7 +64,6 @@ export const processDataCalculation = (data: any) => {
   if (type === 'plain' && !isBook) {
     newDataRef[findIndex].durability = durability - totalDays;
   }
-  console.log('=====', type);
 
   if (type === 'meter' && !isBook) {
     newDataRef[findIndex].durability =
