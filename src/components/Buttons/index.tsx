@@ -1,10 +1,15 @@
 import classNames from 'classnames';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import 'react-datepicker/dist/react-datepicker.css';
 
 interface ButtonTypes {
-  [others: string]: any;
+  text: string;
+  type?: 'button' | 'submit' | 'reset';
+  className?: string;
+  variant?: string;
+  to?: string;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 export const BUTTON_VARIANT = {
@@ -20,7 +25,7 @@ export const Button: FC<ButtonTypes> = (props) => {
     variant,
 
     {
-      [className]: classNames,
+      [className as string]: classNames,
       'disabled:opacity-75': disabled,
     },
   );
@@ -33,7 +38,7 @@ export const Button: FC<ButtonTypes> = (props) => {
   }
   return (
     <>
-      <button {...props} type={type || 'button'} className={buttonStyles}>
+      <button {...props} type={type} className={buttonStyles}>
         {text}
       </button>
     </>
