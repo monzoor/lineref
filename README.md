@@ -1,4 +1,4 @@
-# Chaldal Test
+# Line Reflection Ltd Test
 
 ## How to run the project
 
@@ -20,10 +20,6 @@ Your app is ready to be deployed!
 ### Project routes
 
 `http://localhost:3000/`
-
-`http://localhost:3000/lists`
-
-`http://localhost:3000/404`
 
 ### Used Libraries
 
