@@ -1,4 +1,5 @@
 import { FC, memo, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 
 import { Page, Spinner } from '@components';
 import { LS_KEYS } from '@constants';
@@ -31,8 +32,8 @@ const Home: FC = () => {
           dispatch(getSuccessFetchData(newDataSet));
         } catch (error) {
           removeLSValue(LS_KEYS.USER_DATA);
-
           window.location.assign(PAGES.ERROR);
+          Sentry.captureException(error);
         }
       };
       fetchItems();
