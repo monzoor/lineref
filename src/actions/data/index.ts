@@ -1,3 +1,8 @@
+import { LS_KEYS } from '@constants';
+import { PAGES } from '@constants/pages';
+import * as Sentry from '@sentry/react';
+import { processNewData } from '@utils';
+import { removeLSValue, setLSValue } from '@utils/storage';
 import { MAIN_DATA } from '../';
 const dataSet = ['data'];
 
@@ -20,14 +25,24 @@ export const getErrorFetchData = (): Action => ({
 });
 
 export const fetchData = async (dispatch: (data: any) => void) => {
-  const data = await Promise.all(
+  const dataFetched: any = await Promise.all(
     dataSet.map(async (item: string) => {
       const content = await import(`../../data/${item}.json`);
       return content.default;
     }),
-  ).catch(() => {
+  ).catch((error) => {
+    removeLSValue(LS_KEYS.USER_DATA);
+    Sentry.captureException(error);
+    window.location.assign(PAGES.ERROR);
     dispatch(getErrorFetchData());
   });
-  // dispatch(getSuccessFetchData(data[0 as keyof typeof data]));
-  return data;
+
+  if (dataFetched.length !== 0) {
+    const newDataSet = processNewData(
+      dataFetched[0 as keyof typeof dataFetched],
+    );
+    setLSValue(LS_KEYS.USER_DATA, newDataSet);
+    dispatch(getSuccessFetchData(newDataSet));
+  }
+  return dataFetched;
 };

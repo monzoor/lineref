@@ -87,9 +87,9 @@ const DatePickers: FC = () => {
           />
         </div>
       </div>
-      {errors?.[FIELDS.FILTER.START_DATE] && (
+      {errors?.[FIELDS.BOOKING.START_DATE] && (
         <span className="text-xs text-red-500 block capitalize text-left mb-2">
-          <ErrorMessage errors={errors} name={FIELDS.FILTER.START_DATE} />
+          <ErrorMessage errors={errors} name={FIELDS.BOOKING.START_DATE} />
         </span>
       )}
       <div className="grid grid-cols-1 items-center">
@@ -119,9 +119,9 @@ const DatePickers: FC = () => {
           />
         </div>
       </div>
-      {errors?.[FIELDS.FILTER.END_DATE] && (
+      {errors?.[FIELDS.BOOKING.END_DATE] && (
         <span className="text-xs text-red-500 block capitalize text-left mb-2">
-          <ErrorMessage errors={errors} name={FIELDS.FILTER.END_DATE} />
+          <ErrorMessage errors={errors} name={FIELDS.BOOKING.END_DATE} />
         </span>
       )}
     </>
